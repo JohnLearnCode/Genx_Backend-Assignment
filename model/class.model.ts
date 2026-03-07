@@ -94,11 +94,9 @@ classSchema.virtual('isFull').get(function (this: IClass) {
 });
 
 // Validate capacity không được nhỏ hơn enrolledCount
-classSchema.pre('save', function (next) {
+classSchema.pre('save', function () {
   if (this.capacity < this.enrolledCount) {
-    next(new Error('Capacity cannot be less than enrolled count'));
-  } else {
-    next();
+    throw new Error('Capacity cannot be less than enrolled count');
   }
 });
 
