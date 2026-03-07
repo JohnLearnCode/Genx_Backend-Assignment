@@ -77,7 +77,7 @@ enrollmentSchema.virtual('durationInDays').get(function (this: IEnrollment) {
 });
 
 // Automatically set completedAt when status changes to completed
-enrollmentSchema.pre('save', function (next) {
+enrollmentSchema.pre('save', function () {
   if (this.isModified('status')) {
     if (this.status === EnrollmentStatus.COMPLETED && !this.completedAt) {
       this.completedAt = new Date();
@@ -86,7 +86,6 @@ enrollmentSchema.pre('save', function (next) {
       this.droppedAt = new Date();
     }
   }
-  next();
 });
 
 // Compound index để tránh duplicate enrollment
